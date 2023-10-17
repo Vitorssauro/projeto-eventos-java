@@ -46,7 +46,7 @@ public class TodoList extends JFrame {
                 "Concluídas" });
         clearCompletedButton = new JButton("Limpar Concluídas");
 
-        lblClock = new JLabel();// adicionar o relógio
+        lblClock = new JLabel();// criar o relógio
         // Configuração do painel de entrada
         JPanel inputPanel = new JPanel(new BorderLayout());
         inputPanel.add(taskInputField, BorderLayout.CENTER);
@@ -133,23 +133,35 @@ public class TodoList extends JFrame {
     }
 
     private void deleteTask() {
-        // Exclui a task selecionada da lista de tasks
-        List<Task> selected = new ArrayList<>();
+
+        // Obtém os índices das tarefas selecionadas
         int[] selectedTasks = taskList.getSelectedIndices();
 
+        if (selectedTasks.length == 0) {
+            // Nenhuma tarefa selecionada, mostra uma mensagem de aviso
+            JOptionPane.showMessageDialog(null, "Nenhuma tarefa selecionada para exclusão.");
+        }
+
+        // Exclui a task selecionada da lista de tasks
+        List<Task> selected = new ArrayList<>();
         for (int i = 0; i < selectedTasks.length; i++) {
-            Task selectedTask = tasks.get(i);
+            Task selectedTask = tasks.get(selectedTasks[i]);
             selected.add(selectedTask);
         }
 
         tasks.removeAll(selected);
         updateTaskList();
-
     }
 
     private void markTaskDone() {
         // Marca a task selecionada como concluída
         int selectedIndex = taskList.getSelectedIndex();
+
+        if (selectedIndex < 0) {
+            // Nenhuma tarefa selecionada, mostra uma mensagem de aviso
+            JOptionPane.showMessageDialog(null, "Nenhuma tarefa selecionada para concluir.");
+        }
+
         if (selectedIndex >= 0 && selectedIndex < tasks.size()) {
             Task task = tasks.get(selectedIndex);
             task.setDone(true);
