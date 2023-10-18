@@ -26,7 +26,7 @@ public class TodoList extends JFrame {
     // construtor
     public TodoList() {
         // Configuração da janela principal
-        super("To-Do List App");
+        super("Lista de Afazeres");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 300);
         // Inicializa o painel principal
@@ -65,7 +65,7 @@ public class TodoList extends JFrame {
         // adicionando o relógio
         buttonPanel.add(lblClock);
         // iniciando o timer e chamando a funcao de relogio
-        Timer timer = new Timer(1000, new ClockListener());
+        Timer timer = new Timer(0, new ClockListener());
         timer.start();
 
         // inicia os eventos dos botões
@@ -124,6 +124,8 @@ public class TodoList extends JFrame {
             tasks.add(newTask);
             updateTaskList();
             taskInputField.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null,"Escreva algum nome para a tarefa");
         }
     }
 
@@ -141,7 +143,7 @@ public class TodoList extends JFrame {
         for (int i = 0; i < selectedTasks.length; i++) {
             Task selectedTask = tasks.get(selectedTasks[i]);
             selected.add(selectedTask);
-        }
+        }                
 
         // Exclui a task selecionada da lista de tasks
         tasks.removeAll(selected);
@@ -181,11 +183,20 @@ public class TodoList extends JFrame {
     private void clearCompletedTasks() {
         // Limpa todas as tasks concluídas da lista
         List<Task> completedTasks = new ArrayList<>();
+        boolean complete = true;
+
         for (Task task : tasks) {
             if (task.isDone()) {
                 completedTasks.add(task);
+                complete = false;
             }
         }
+
+        // se nenhuma task for concluida irá aparecer
+        if (complete) {
+            JOptionPane.showMessageDialog(null, "Nenhuma tarefa concluida");
+        }
+
         tasks.removeAll(completedTasks);
         updateTaskList();
     }
