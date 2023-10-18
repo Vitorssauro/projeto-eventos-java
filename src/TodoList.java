@@ -76,11 +76,6 @@ public class TodoList extends JFrame {
 
     }
 
-    public void addTime() {
-        // setando relógio
-
-    }
-
     class ClockListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             Calendar now = Calendar.getInstance();
@@ -141,14 +136,14 @@ public class TodoList extends JFrame {
             // Nenhuma tarefa selecionada, mostra uma mensagem de aviso
             JOptionPane.showMessageDialog(null, "Nenhuma tarefa selecionada para exclusão.");
         }
-
-        // Exclui a task selecionada da lista de tasks
+        // faz um loop para adicionar a lista "selected" as tasks selecionadas
         List<Task> selected = new ArrayList<>();
         for (int i = 0; i < selectedTasks.length; i++) {
             Task selectedTask = tasks.get(selectedTasks[i]);
             selected.add(selectedTask);
         }
 
+        // Exclui a task selecionada da lista de tasks
         tasks.removeAll(selected);
         updateTaskList();
     }
@@ -162,6 +157,7 @@ public class TodoList extends JFrame {
             JOptionPane.showMessageDialog(null, "Nenhuma tarefa selecionada para concluir.");
         }
 
+        // iteração para selecionar a task que será concluída
         if (selectedIndex >= 0 && selectedIndex < tasks.size()) {
             Task task = tasks.get(selectedIndex);
             task.setDone(true);
